@@ -1,0 +1,139 @@
+public class Test1 {
+	
+	private static WebDriver  driver;
+	
+	@BeforeClass
+	public static void before() {
+		System.setProperty("webdriver.gecko.driver", ".\\tools\\geckodriver.exe");
+		driver = new FirefoxDriver();
+		driver.get("http://localhost:8087/examsys/login.thtml");
+	}
+	
+	@Test
+	public void test() {//登录
+		driver.findElement(By.name("username")).sendKeys("zhangxi");//输入账号
+		driver.findElement(By.name("userpass")).sendKeys("123456");//输入密码
+		driver.findElement(By.xpath("/html/body/div/div/table/tbody/tr[3]/td/select/option[3]")).click();//选择管理员
+		driver.findElement(By.name("usercode")).sendKeys("111111");//输入验证码
+		driver.findElement(By.xpath("/html/body/div/div/table/tbody/tr[5]/td/div/button[1]")).click();//点击登录
+	}
+	
+//	@Test
+//	public void test1() throws InterruptedException {//学生管理操作
+//		driver.switchTo().frame("menu");//跳转框架
+//		driver.findElement(By.xpath("/html/body/div/div[1]/h2/a")).click();//点击学生管理
+//		Thread.sleep(1000);
+//		driver.findElement(By.xpath("/html/body/div/div[1]/ul/li[1]/a")).click();//点击学生管理
+//		Thread.sleep(1000);
+//		
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("main");//跳转框架
+//		WebElement a = driver.findElement(By.xpath("//*[@id=\"form_user_batch\"]/table/tbody"));
+//		a.findElements(By.tagName("tr")).get(0).findElement(By.name("b_uids")).click();//选择第一个学生
+//		a.findElements(By.tagName("tr")).get(1).findElement(By.name("b_uids")).click();//选择第二个学生
+//		Thread.sleep(1000);
+//		
+//		Select se = new Select(driver.findElement(By.name("b_op")));
+//		se.selectByIndex(2);//选择批量选择
+//		driver.findElement(By.name("b_status")).findElements(By.tagName("option")).get(1).click();//选择正常
+//		driver.findElement(By.xpath("//*[@id=\"form_user_batch\"]/div/div/input")).click();//点击提交
+//		Thread.sleep(2000);
+//		driver.switchTo().alert().accept();//点击确定//跳到弹框：driver.switchTo().alert();
+//	}
+	
+//	@Test
+//	public void test2() throws InterruptedException {//添加试题
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("menu");
+//		driver.findElement(By.linkText("题库管理")).click();//点击题库管理
+//		driver.findElement(By.cssSelector("body > div > div:nth-child(3) > ul > li:nth-child(3) > a")).click();//点击新增试题
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("main");
+//		new Select(driver.findElement(By.name("q_type"))).selectByValue("4");//试题类型选择填空题
+//		new Select(driver.findElement(By.name("q_dbid"))).selectByIndex(1);//所属题库选择古诗
+//		driver.switchTo().frame(driver.findElement(By.tagName("iframe")));//跳到子框架
+//		Actions ac = new Actions(driver);
+//		ac.click(driver.findElement(By.xpath("/html/body/p"))).sendKeys("举头望明月，").perform();//输入试题题干
+//		driver.switchTo().parentFrame();//返回上一级框架
+//		driver.findElement(By.xpath("//*[@id=\"tm_body\"]/div/input[1]")).click();//点击添加填空
+//		driver.findElement(By.name("q_blanks")).sendKeys("低头思故乡");//输入填空
+//		driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
+//		ac.click(driver.findElement(By.xpath("/html/body/p"))).sendKeys("。").perform();
+//		driver.switchTo().parentFrame();
+//		Thread.sleep(2000);
+//		driver.findElement(By.xpath("//*[@id=\"form_question_add\"]/table/tfoot/tr/td/button[1]")).click();//点击提交
+//	}
+	
+//	@Test
+//	public void test3() {//创建试卷
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("menu");
+//		driver.findElement(By.xpath("/html/body/div/div[4]/h2/a")).click();//点击试卷管理
+//		driver.findElement(By.linkText("创建试卷")).click();//点击创建试卷
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("main");
+//		driver.findElement(By.name("p_name")).sendKeys("周测1");//输入试题名称
+//		driver.findElement(By.name("p_cid")).findElements(By.tagName("option")).get(1).click();//试卷分类选择周测
+//		
+//		driver.findElement(By.xpath("//*[@id=\"form_paper_add\"]/table/tbody[2]/tr[3]/td[1]/input")).click();//点击开考时间
+//		driver.switchTo().frame(driver.findElement(By.tagName("iframe")));//进入日历框架
+//		driver.findElement(By.id("dpQS")).click();//点击快速选择时间
+//		driver.findElement(By.xpath("/html/body/div/div[2]/table/tbody")).
+//			findElements(By.tagName("tr")).get(1).click();//点击快速选择时间里的第一个时间
+//		
+//		driver.switchTo().parentFrame();//返回上一级框架
+//		driver.findElement(By.name("p_endtime")).click();//点击结束时间
+//		driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
+//		driver.findElement(By.id("dpQS")).click();//点击快速选择时间
+//		driver.findElement(By.xpath("/html/body/div/div[2]/table/tbody")).
+//			findElements(By.tagName("tr")).get(3).click();//点击快速选择时间里的第三个时间
+//		
+//		driver.switchTo().parentFrame();
+//		driver.findElement(By.name("p_showtime")).click();//点击成绩公布时间
+//		driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
+//		driver.findElement(By.xpath("/html/body/div/div[3]/table/tbody/tr[6]/td[3]")).click();//点击日历中的日期
+//		driver.findElement(By.id("dpOkInput")).click();//点击确定
+//		
+//		driver.switchTo().parentFrame();
+//		driver.findElement(By.name("p_duration")).sendKeys("30");//考试时长输入
+//		driver.findElement(By.xpath("//*[@id=\"form_paper_add\"]/table/tbody[2]/tr[7]/td/textarea")).sendKeys("考试内容为古诗词");//试卷说明输入
+//		driver.findElement(By.xpath("//*[@id=\"form_paper_add\"]/table/tbody[2]/tr[8]/td/label/input")).click();//选择测试一班
+//		driver.findElement(By.xpath("//*[@id=\"form_paper_add\"]/table/tfoot/tr/td/button[1]")).click();//点击提交
+//	}
+	
+//	@Test
+//	public void test4() throws InterruptedException {//试卷管理
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("menu");
+//		driver.findElement(By.xpath("/html/body/div/div[4]/h2/a")).click();//点击试卷管理
+//		driver.findElement(By.xpath("/html/body/div/div[4]/ul/li[3]/a")).click();//点击试卷管理
+//		driver.switchTo().defaultContent();
+//		driver.switchTo().frame("main");
+//		driver.findElement(By.xpath("/html/body/div/div[3]/form/table/tbody/tr[1]/td[9]/a[1]")).click();//配置试卷
+//		driver.findElement(By.name("p_section_names")).sendKeys("静夜诗");//输入章节名称
+//		driver.findElement(By.name("p_section_remarks")).sendKeys("古诗填空");//输入章节描述
+//		
+//		Actions action = new Actions(driver);
+//		WebElement source1 = driver.findElement(By.xpath("//*[@id=\"question_list\"]/li[1]"));//第一个试题/资源元素
+//		WebElement target = driver.findElement(By.xpath("//*[@id=\"paper_sections\"]/li/dl/dd"));//目标元素
+//		action.dragAndDrop(source1, target).perform();//把试题从题库中拖到当前试卷
+//		WebElement source2 = driver.findElement(By.xpath("//*[@id=\"question_list\"]/li[1]"));//剩下的第一个试题/资源元素
+//		Thread.sleep(5000);
+//		action.dragAndDrop(source2, target).perform();
+//		
+//		List<WebElement> a = driver.findElements(By.name("p_question_scores_1"));//定位分值输入框
+//		a.get(0).sendKeys(Keys.BACK_SPACE,"10");//删掉0输入10
+////		a.get(0).sendKeys("10");
+//		a.get(1).sendKeys(Keys.BACK_SPACE,"10");
+////		a.get(1).sendKeys("10");
+//		driver.findElement(By.xpath("//*[@id=\"form_paper_detail\"]/div/div[4]/button[1]")).click();//点击提交
+//		
+//	}
+	
+	
+	@AfterClass
+	public static void after() {
+		//driver.close();
+	}
+
+}
